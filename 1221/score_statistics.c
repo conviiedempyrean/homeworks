@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+double **create_matrix(int m,int n);
+void free_matrix(double **scores,int m);
 void input_scores(double **scores, int m, int n);
 void calc_averages(double **scores, double *avg, int m, int n);
 void array_sort(double *arr, int size);
@@ -14,13 +16,13 @@ int main()
     printf("Enter number of courses n: ");
     scanf("%d", &n);
     
-    double **scores = (double **)malloc(m * sizeof(double *));
-    for (int i = 0; i < m; i++) 
-    {
-        scores[i] = (double *)malloc(n * sizeof(double));
-    }
-    
+    double **scores = create_matrix(m,n);
+
     double *averages = (double *)malloc(m * sizeof(double));
+    if (averages == NULL)
+    {
+    printf("Memory allocation failed for averages!\n");
+    }
     
     input_scores(scores, m, n);
     calc_averages(scores, averages, m, n);
@@ -69,10 +71,10 @@ void free_matrix(double **scores, int m) {
 void input_scores(double **scores, int m, int n)
 {
     printf("\nEnter scores for %d students and %d courses:\n", m, n);
-    for (int i = 0; i < m; i++) 
+    for (int i = 0; i < m; i++)
     {
         printf("Student %d: ", i + 1);
-        for (int j = 0; j < n; j++) 
+        for (int j = 0; j < n; j++)
         {
             scanf("%lf", &scores[i][j]);
         }
@@ -81,10 +83,10 @@ void input_scores(double **scores, int m, int n)
 
 void calc_averages(double **scores, double *avg, int m, int n)
 {
-    for (int i = 0; i < m; i++) 
+    for (int i = 0; i < m; i++)
     {
         double sum = 0.0;
-        for (int j = 0; j < n; j++) 
+        for (int j = 0; j < n; j++)
         {
             sum += scores[i][j];
         }
@@ -93,19 +95,19 @@ void calc_averages(double **scores, double *avg, int m, int n)
     printf("averages calculated\n");
 }
 
-void array_sort(double *arr, int size) 
+void array_sort(double *arr, int size)
 {
-    for (int i = 0; i < size - 1; i++) 
+    for (int i = 0; i < size - 1; i++)
     {
         int max = i;
-        for (int j = i + 1; j < size; j++) 
+        for (int j = i + 1; j < size; j++)
         {
-            if (arr[j] > arr[max]) 
+            if (arr[j] > arr[max])
             {
                 max = j;
             }
         }
-        if (max != i) 
+        if (max != i)
         {
             double temp = arr[max];
             arr[max] = arr[i];
@@ -115,10 +117,10 @@ void array_sort(double *arr, int size)
     printf("sort completed\n");
 }
 
-void array_output(double *arr, int size) 
+void array_output(double *arr, int size)
 {
     printf("your array:");
-    for (int i = 0; i < size; i++) 
+    for (int i = 0; i < size; i++)
     {
         printf(" %.2f ", arr[i]);
     }
