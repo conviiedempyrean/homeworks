@@ -23,7 +23,6 @@ int main()
     double *averages = (double *)malloc(m * sizeof(double));
     
     input_scores(scores, m, n);
-    
     calc_averages(scores, averages, m, n);
     
     printf("\n===== Original Averages =====\n");
@@ -34,14 +33,37 @@ int main()
     printf("\n===== Sorted Averages (Descending) =====\n");
     array_output(averages, m);
     
-    for (int i = 0; i < m; i++) 
-    {
-        free(scores[i]);
-    }
-    free(scores);
+    free_matrix(scores,m);
     free(averages);
     
     return 0;
+}
+
+double **create_matrix(int m, int n)
+{
+    double **scores = (double **)malloc(m * sizeof(double *));
+    if (scores == NULL) return NULL;
+    
+    for (int i = 0; i < m; i++)
+    {
+        scores[i] = (double *)malloc(n * sizeof(double));
+        if (scores[i] == NULL) {
+            for (int j = 0; j < i; j++)
+            {
+                free(scores[j]);
+            }
+            free(scores);
+            return NULL;
+        }
+    }
+    return scores;
+}
+
+void free_matrix(double **scores, int m) {
+    for (int i = 0; i < m; i++) {
+        free(scores[i]);
+    }
+    free(scores);
 }
 
 void input_scores(double **scores, int m, int n)
