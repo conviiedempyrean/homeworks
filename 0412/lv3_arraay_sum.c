@@ -40,13 +40,17 @@ int main(void)
         }
         for (int j = 0; j < DIM2; j++) {
             p[i][j] = malloc(DIM3 * sizeof(int));
-            if (p[i][j] == NULL) {
+            if (p[i][j] == NULL)
+            {
                 perror("malloc");
-                for (int y = 0; y < j; y++) {
+                for (int y = 0; y < j; y++)
+                {
                     free(p[i][y]);
                 }
-                for (int x = 0; x < i; x++) {
-                    for (int y = 0; y < DIM2; y++) {
+                for (int x = 0; x < i; x++)
+                {
+                    for (int y = 0; y < DIM2; y++)
+                    {
                         free(p[x][y]);
                     }
                     free(p[x]);
@@ -55,7 +59,8 @@ int main(void)
                 free(p);
                 return 1;
             }
-            for (int k = 0; k < DIM3; k++) {
+            for (int k = 0; k < DIM3; k++)
+            {
                 p[i][j][k] = i * DIM2 * DIM3 + j * DIM3 + k + 1;
             }
         }
