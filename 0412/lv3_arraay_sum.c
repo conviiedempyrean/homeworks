@@ -28,9 +28,11 @@ int main(void)
 
     for (int i = 0; i < DIM1; i++) {
         p[i] = malloc(DIM2 * sizeof(int *));
-        if (p[i] == NULL) {
+        if (p[i] == NULL) 
+        {
             perror("malloc");
-            for (int x = 0; x < i; x++) {
+            for (int x = 0; x < i; x++) 
+            {
                 free(p[x]);
             }
             free(p);
